@@ -1,0 +1,18 @@
+doctype html
+meta(charset='UTF-8')
+title Title
+meta(name='viewport' content='width=device-width')
+link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet')
+form
+    .form-book
+        h2 Книга
+    div
+        label Кому выдается
+        input.name_book(name='name')
+    .form-book
+        label Дата возврата
+        input.author_book(name='date')
+        button.btn-edit-book.btn(type='submit') Выдать
+    input(type='button' value='Вернуться' onclick='location.href="http://localhost:3001"')
+script
+    include script_lend_book.js

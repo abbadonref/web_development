@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<form>
+  <div class = "form-book">
+    <h2>Книга</h2>
+  </div>
+  <div>
+    <label>Кому выдается</label>
+    <input class = "name_book" name = "name">
+  </div>
+  <div class="form-book">
+    <label>Дата возврата</label>
+    <input class = "author_book" name="date">
+    <button type="submit" class="btn-edit-book btn">Выдать</button>
+  </div>
+    <input type="button" value="Вернуться" onClick='location.href="http://localhost:3001"'>
+</form>
+
+    <script>
+      let id_needed = 0;
+      let form = document.querySelector("form");
+
+      async function get_id(){
+        let response = await fetch("/id", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          }
+        })
+        id_needed = await response.json()
+        console.log(id_needed)
+      }
+      async function Add_owner(name,date){
+        let response = await fetch("/book/give", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify({
+            name: name,
+            date: date,
+            id: id_needed
+          })
+        })
+        if (response.ok === true){
+          console.log("good")
+        }
+      }
+      form.addEventListener("submit",function (event){
+        event.preventDefault()
+        let name = this.elements["name"].value;
+        let date = this.elements["date"].value;
+        Add_owner(name,date)
+      })
+      get_id()
+    </script>
+</body>
+</html>
